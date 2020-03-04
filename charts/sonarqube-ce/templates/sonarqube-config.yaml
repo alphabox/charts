@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sonarqube-ce.sonarqube.fullname" . }}-config
+  labels:
+    app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
+    helm.sh/chart: {{ include "sonarqube-ce.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  sonar.properties:
+    sonar.es.bootstrap.checks.disable=false
+  {{ range $key, $val := .Values.app.properties }}
+    {{ $key }}={{ $val }}
+  {{ end }}
