@@ -52,10 +52,12 @@ persistence:
     storageClassName: ""
   logs:
     enabled: false
+    existingClaim: ""
     size: 1G
     storageClassName: ""
   extensions:
     enabled: false
+    existingClaim: ""
     size: 1G
     storageClassName: ""
 

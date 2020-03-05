@@ -95,14 +95,14 @@ spec:
         - name: sonarqube-logs
           {{- if .Values.persistence.logs.enabled }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.data.existingClaim | default (printf "%s-logs" (include "sonarqube-ce.sonarqube.name" .)) }}
+            claimName: {{ .Values.persistence.logs.existingClaim | default (printf "%s-logs" (include "sonarqube-ce.sonarqube.name" .)) }}
           {{- else }}
           emptyDir: {}
           {{- end }}
         - name: sonarqube-extensions
           {{- if .Values.persistence.extensions.enabled }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.data.existingClaim | default (printf "%s-extensions" (include "sonarqube-ce.sonarqube.name" .)) }}
+            claimName: {{ .Values.persistence.extensions.existingClaim | default (printf "%s-extensions" (include "sonarqube-ce.sonarqube.name" .)) }}
           {{- else }}
           emptyDir: {}
           {{- end }}

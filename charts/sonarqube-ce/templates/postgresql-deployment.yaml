@@ -27,6 +27,8 @@ spec:
               drop:
                 - ALL
           env:
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -50,7 +52,7 @@ spec:
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
-            claimName: {{ include "sonarqube-ce.postgresql.name" . }}
+            claimName: {{ .Values.postgresql.persistence.existingClaim | default (printf "%s" (include "sonarqube-ce.postgresql.name" .)) }}
 {{- end }}
   selector:
     matchLabels:
