@@ -7,7 +7,33 @@ image:
   pullPolicy: IfNotPresent
 
 app:
+  enableTelemetry: false
   properties: {}
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
+  httpGet:
+    port: 9000
+    path: /
+
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
+  httpGet:
+    port: 9000
+    path: /
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
 
 resources: {}
 # limits:
@@ -55,6 +81,7 @@ postgresql:
   database: sonarqube
   persistence:
     enabled: false
+    existingClaim: ""
     size: 1Gi
     storageClassName: ""
   resources: {}

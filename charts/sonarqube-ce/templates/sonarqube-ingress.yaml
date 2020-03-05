@@ -1,15 +1,12 @@
 {{- if .Values.ingress.enabled -}}
   {{- $fullName := include "sonarqube-ce.fullname" . -}}
-  {{- $backend := include "sonarqube-ce.sonarqube.fullname" . -}}
+  {{- $backend := include "sonarqube-ce.sonarqube.name" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
-    helm.sh/chart: {{ include "sonarqube-ce.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
   {{- toYaml . | nindent 4 }}

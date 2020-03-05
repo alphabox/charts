@@ -44,10 +44,10 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
-{{- define "sonarqube-ce.sonarqube.fullname" -}}
-{{- printf "%s-sonarqube" (include "sonarqube-ce.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- define "sonarqube-ce.sonarqube.name" -}}
+{{- printf "%s-sonarqube" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "sonarqube-ce.postgresql.fullname" -}}
-{{- printf "%s-postgresql" (include "sonarqube-ce.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- define "sonarqube-ce.postgresql.name" -}}
+{{- printf "%s-postgresql" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

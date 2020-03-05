@@ -1,26 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+  name: {{ include "sonarqube-ce.postgresql.name" . }}
   labels:
-    app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgresql
-    helm.sh/chart: {{ include "sonarqube-ce.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: 1
   template:
     metadata:
-      name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+      name: {{ include "sonarqube-ce.postgresql.name" . }}
       labels:
-        app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
+        {{- include "sonarqube-ce.labels" . | nindent 8 }}
         app.kubernetes.io/component: postgresql
-        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       restartPolicy: Always
       containers:
-        - name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+        - name: {{ include "sonarqube-ce.postgresql.name" . }}
           image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
           imagePullPolicy: {{ .Values.postgresql.image.pullPolicy }}
           securityContext:
@@ -34,17 +30,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+                  name: {{ include "sonarqube-ce.postgresql.name" . }}
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+                  name: {{ include "sonarqube-ce.postgresql.name" . }}
                   key: password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "sonarqube-ce.postgresql.fullname" . }}
+                  name: {{ include "sonarqube-ce.postgresql.name" . }}
                   key: database
           resources: {{- toYaml .Values.postgresql.resources | nindent 12 }}
 {{- if .Values.postgresql.persistence.enabled }}
@@ -54,10 +50,9 @@ spec:
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
-            claimName: {{ include "sonarqube-ce.postgresql.fullname" . }}
+            claimName: {{ include "sonarqube-ce.postgresql.name" . }}
 {{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
+      {{- include "sonarqube-ce.labels" . | nindent 6 }}
       app.kubernetes.io/component: postgresql
-      app.kubernetes.io/instance: {{ .Release.Name }}
