@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "apicurio.ws.name" . }}
+  labels:
+    {{- include "apicurio.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: {{ include "apicurio.ws.name" . }}
+      labels:
+        {{- include "apicurio.labels" . | nindent 8 }}
+        app.kubernetes.io/component: websocket
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ include "apicurio.ws.name" . }}
+          image: "{{ .Values.ws.image.repository }}:{{ .Values.ws.image.tag }}"
+          imagePullPolicy: {{ .Values.ws.image.pullPolicy }}
+          env:
+            - name: APICURIO_DB_CONNECTION_URL
+              value: {{ include "apicurio.db.connectionUrl" . }}
+            - name: APICURIO_DB_DRIVER_NAME
+              value: {{ include "apicurio.db.driverName" . }}
+            - name: APICURIO_DB_TYPE
+              value: {{ include "apicurio.db.type" . }}
+            - name: APICURIO_DB_USER_NAME
+              {{- include "apicurio.db.username" . | nindent 14 }}
+            - name: APICURIO_DB_PASSWORD
+              {{- include "apicurio.db.password" . | nindent 14 }}
+            - name: APICURIO_DB_INITIALIZE
+              value: "false"
+            - name: APICURIO_MIN_HEAP
+              value: {{ .Values.ws.app.minHeap | quote }}
+            - name: APICURIO_MAX_HEAP
+              value: {{ .Values.ws.app.maxHeap | quote }}
+            - name: APICURIO_LOGGING_LEVEL
+              value: {{ .Values.ws.app.loggingLevel | quote }}
+          resources: {{- toYaml .Values.ui.resources | nindent 12 }}
+  selector:
+    matchLabels:
+      {{- include "apicurio.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: websocket

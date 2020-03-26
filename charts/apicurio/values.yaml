@@ -1,0 +1,99 @@
+nameOverride:
+fullnameOverride:
+
+api:
+  image:
+    repository: apicurio/apicurio-studio-api
+    tag: 0.2.46.Final
+    pullPolicy: IfNotPresent
+  app:
+    keyCloakClientId: apicurio-api
+    loggingLevel: INFO
+    minHeap: 768m
+    maxHeap: 2048m
+    githubApiUrl: https://api.github.com
+    gitlabApiUrl: https://gitlab.com
+    bitbucketApiUrl: https://api.bitbucket.org/2.0
+  resources: {}
+
+ui:
+  image:
+    repository: apicurio/apicurio-studio-ui
+    tag: 0.2.46.Final
+    pullPolicy: IfNotPresent
+  app:
+    keyCloakClientId: apicurio-studio
+    loggingLevel: INFO
+    minHeap: 768m
+    maxHeap: 2048m
+    apiAbsolutePath: ""
+    wsAbsolutePath: ""
+  resources: {}
+
+ws:
+  image:
+    repository: apicurio/apicurio-studio-ws
+    tag: 0.2.46.Final
+    pullPolicy: IfNotPresent
+  app:
+    loggingLevel: INFO
+    minHeap: 768m
+    maxHeap: 2048m
+  resources: {}
+
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: 12.2-alpine
+    pullPolicy: IfNotPresent
+  properties:
+    username: apicurio
+    password: apicurio
+    database: apicurio
+  persistence:
+    enabled: false
+    size: 1Gi
+    storageClassName: ""
+    existingClaim: ""
+  resources: {}
+
+mysqlExternal:
+  enabled: false
+  service:
+    name: ""
+    port: 3306
+  properties:
+    username: {}
+    password: {}
+    database: ""
+
+postgresqlExternal:
+  enabled: false
+  service:
+    name: ""
+    port: 0
+  properties:
+    database: ""
+    username: {}
+    password: {}
+
+keycloak:
+  url: https://studio-auth.apicur.io/auth/
+  realm: apicurio
+  # Set to true to disable the HTTP client trust manager when accessing Keycloak (used when making HTTPS client calls to Keycloak).
+  disableTrustManager: true
+  # Set APICURIO_KC_SSL_REQUIRED to ALL, else it will defined by ingress.tls.enabled parameter
+  forceSSL: false
+  # If you apply a service name, then it will be released in the Ingress with the keycloak.url
+  service:
+    name: ""
+    port: 8080
+
+ingress:
+  enabled: false
+  annotations: {}
+  host: ""
+  tls:
+    enabled: false
+    secretName: ""

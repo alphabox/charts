@@ -1,0 +1,48 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "apicurio.fullname" . }}
+  labels:
+  {{- include "apicurio.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite "/studio-api(/|$)(.*)" /$2 break;
+      rewrite "/ws(/|$)(.*)" /$2 break;
+  {{- with .Values.ingress.annotations }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ include "apicurio.ui.name" . }}
+              servicePort: http
+          - path: /studio-api
+            backend:
+              serviceName: {{ include "apicurio.api.name" . }}
+              servicePort: http
+          - path: /ws
+            backend:
+              serviceName: {{ include "apicurio.ws.name" . }}
+              servicePort: http
+          {{- if $.Values.keycloak.service.name }}
+          - path: "{{ $.Values.keycloak.url }}/realms/{{ $.Values.keycloak.realm }}"
+            backend:
+              serviceName: {{ $.Values.keycloak.service.name }}
+              servicePort: {{ $.Values.keycloak.service.port }}
+          - path: "{{ $.Values.keycloak.url }}/resources"
+            backend:
+              serviceName: {{ $.Values.keycloak.service.name }}
+              servicePort: {{ $.Values.keycloak.service.port }}
+          {{- end }}
+{{- end }}

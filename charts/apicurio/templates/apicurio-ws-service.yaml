@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "apicurio.ws.name" . }}
+  labels:
+    {{- include "apicurio.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+spec:
+  selector:
+    {{- include "apicurio.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+  ports:
+    - name: http
+      port: 8080
+  type: ClusterIP
