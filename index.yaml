@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  apicurio:
+  - apiVersion: v1
+    appVersion: 0.2.46.Final
+    created: "2020-03-26T22:34:24.362821998Z"
+    description: Design beautiful, functional APIs with zero coding, using OpenAPI
+    digest: cd94f6bd5c113793301a3af10ebe6fb2c84971a8a9fb18b3a4662546a7067a17
+    home: https://www.apicur.io/
+    icon: https://design.jboss.org/apicurio/logo/logofiles/apicurio_icon_lightbkg_color.svg
+    name: apicurio
+    sources:
+    - https://github.com/Apicurio/apicurio-studio
+    urls:
+    - https://github.com/alphabox/charts/releases/download/apicurio-0.1.1/apicurio-0.1.1.tgz
+    version: 0.1.1
+generated: "2020-03-26T22:34:24.237876557Z"
