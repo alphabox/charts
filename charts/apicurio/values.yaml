@@ -85,7 +85,7 @@ keycloak:
   disableTrustManager: true
   # Set APICURIO_KC_SSL_REQUIRED to ALL, else it will defined by ingress.tls.enabled parameter
   forceSSL: false
-  # If you apply a service name, then it will be released in the Ingress with the keycloak.url
+  # If you apply a service name, then it will be released in the Ingress with the keycloak.url as a path
   service:
     name: ""
     port: 8080

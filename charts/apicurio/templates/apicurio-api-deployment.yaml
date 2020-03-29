@@ -33,7 +33,7 @@ spec:
             - name: APICURIO_DB_INITIALIZE
               value: "true"
             - name: APICURIO_KC_AUTH_URL
-              value: {{ .Values.keycloak.url | quote }}
+              value: {{ include "apicurio.api.keycloakPath" . | quote }}
             - name: APICURIO_KC_REALM
               value: {{ .Values.keycloak.realm | quote }}
             - name: APICURIO_KC_CLIENT_ID

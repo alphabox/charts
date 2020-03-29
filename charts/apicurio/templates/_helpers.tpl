@@ -146,3 +146,15 @@ valueFrom:
 {{- printf "http://%s/studio-api" .Values.ingress.host -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "apicurio.api.keycloakPath" -}}
+{{- if and .Values.ingress.enabled .Values.keycloak.service.name -}}
+    {{- if .Values.ingress.tls.enabled -}}
+        {{- printf "https://%s%s" .Values.ingress.host .Values.keycloak.url -}}
+    {{- else -}}
+        {{- printf "http://%s%s" .Values.ingress.host .Values.keycloak.url -}}
+    {{- end -}}
+{{- else -}}
+{{- printf "%s" .Values.keycloak.url -}}
+{{- end -}}
+{{- end -}}
