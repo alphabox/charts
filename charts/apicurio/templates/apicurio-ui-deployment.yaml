@@ -27,7 +27,7 @@ spec:
             - name: APICURIO_UI_LOGOUT_REDIRECT_URI
               value: "/"
             - name: APICURIO_KC_AUTH_URL
-              value: {{ .Values.keycloak.url |quote }}
+              value: {{ include "apicurio.api.keycloakPath" . |quote }}
             - name: APICURIO_KC_REALM
               value: {{ .Values.keycloak.realm | quote }}
             - name: APICURIO_KC_CLIENT_ID

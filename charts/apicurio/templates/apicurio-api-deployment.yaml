@@ -21,11 +21,11 @@ spec:
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           env:
             - name: APICURIO_DB_CONNECTION_URL
-              value: {{ include "apicurio.db.connectionUrl" . }}
+              value: {{ include "apicurio.db.connectionUrl" . | quote }}
             - name: APICURIO_DB_DRIVER_NAME
-              value: {{ include "apicurio.db.driverName" . }}
+              value: {{ include "apicurio.db.driverName" . | quote }}
             - name: APICURIO_DB_TYPE
-              value: {{ include "apicurio.db.type" . }}
+              value: {{ include "apicurio.db.type" . | quote }}
             - name: APICURIO_DB_USER_NAME
               {{- include "apicurio.db.username" . | nindent 14 }}
             - name: APICURIO_DB_PASSWORD
@@ -33,7 +33,7 @@ spec:
             - name: APICURIO_DB_INITIALIZE
               value: "true"
             - name: APICURIO_KC_AUTH_URL
-              value: {{ .Values.keycloak.url | quote }}
+              value: {{ include "apicurio.api.keycloakPath" . | quote }}
             - name: APICURIO_KC_REALM
               value: {{ .Values.keycloak.realm | quote }}
             - name: APICURIO_KC_CLIENT_ID
