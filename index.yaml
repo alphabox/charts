@@ -27,4 +27,19 @@ entries:
     urls:
     - https://github.com/alphabox/charts/releases/download/apicurio-0.1.1/apicurio-0.1.1.tgz
     version: 0.1.1
+  sonarqube-ce:
+  - apiVersion: v1
+    appVersion: 8.2-community
+    created: "2020-04-27T12:29:40.831479082Z"
+    description: SonarQube provides the capability to not only show health of an application
+      but also to highlight issues newly introduced.
+    digest: f36f0bb44359407583caf1a27c49da02b477c69f3e1306b3457651476bc619c8
+    home: https://www.sonarqube.org/
+    icon: https://www.sonarqube.org/logos/index/sonarqube-logo@2x.png
+    name: sonarqube-ce
+    sources:
+    - https://github.com/SonarSource/sonarqube
+    urls:
+    - https://github.com/alphabox/charts/releases/download/sonarqube-ce-0.1.0/sonarqube-ce-0.1.0.tgz
+    version: 0.1.0
 generated: "2020-03-26T22:34:24.237876557Z"
