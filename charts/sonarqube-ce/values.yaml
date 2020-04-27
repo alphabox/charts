@@ -1,0 +1,89 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: sonarqube
+  tag: 8.2-community
+  pullPolicy: IfNotPresent
+
+app:
+  enableTelemetry: false
+  properties: {}
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
+  httpGet:
+    port: 9000
+    path: /
+
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
+  httpGet:
+    port: 9000
+    path: /
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+resources: {}
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
+
+
+persistence:
+  data:
+    enabled: false
+    existingClaim: ""
+    size: 1G
+    storageClassName: ""
+  logs:
+    enabled: false
+    existingClaim: ""
+    size: 1G
+    storageClassName: ""
+  extensions:
+    enabled: false
+    existingClaim: ""
+    size: 1G
+    storageClassName: ""
+
+ingress:
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+postgresql:
+  image:
+    repository: postgres
+    tag: 12.2-alpine
+    pullPolicy: IfNotPresent
+  username: sonarqube
+  password: sonarqube
+  database: sonarqube
+  persistence:
+    enabled: false
+    existingClaim: ""
+    size: 1Gi
+    storageClassName: ""
+  resources: {}

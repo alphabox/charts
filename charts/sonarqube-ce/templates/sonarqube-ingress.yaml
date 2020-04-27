@@ -1,0 +1,35 @@
+{{- if .Values.ingress.enabled -}}
+  {{- $fullName := include "sonarqube-ce.fullname" . -}}
+  {{- $backend := include "sonarqube-ce.sonarqube.name" . -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $backend }}
+              servicePort: http
+    {{- end }}
+{{- end }}

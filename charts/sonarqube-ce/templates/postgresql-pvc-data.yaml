@@ -1,0 +1,15 @@
+{{- if and .Values.postgresql.persistence.enabled (not .Values.postgresql.persistence.existingClaim) -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "sonarqube-ce.postgresql.name" . }}
+  labels:
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgresql.persistence.size }}
+  storageClassName: {{ .Values.postgresql.persistence.storageClassName }}
+{{- end }}

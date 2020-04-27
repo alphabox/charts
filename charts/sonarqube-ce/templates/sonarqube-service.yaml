@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sonarqube-ce.sonarqube.name" . }}
+  labels:
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: sonarqube
+spec:
+  selector:
+    {{- include "sonarqube-ce.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: sonarqube
+  ports:
+    - name: http
+      port: 80
+      targetPort: 9000
+  type: ClusterIP

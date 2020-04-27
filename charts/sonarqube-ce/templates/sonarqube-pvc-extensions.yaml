@@ -1,0 +1,15 @@
+{{- if and .Values.persistence.extensions.enabled (not .Values.persistence.extensions.existingClaim) -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "sonarqube-ce.sonarqube.name" . }}-extensions
+  labels:
+    {{- include "sonarqube-ce.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.extensions.size }}
+  storageClassName: {{ .Values.persistence.extensions.storageClassName }}
+{{- end }}
