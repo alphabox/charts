@@ -35,13 +35,20 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "sonarqube-ce.labels" -}}
-app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
 helm.sh/chart: {{ include "sonarqube-ce.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "sonarqube-ce.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "sonarqube-ce.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "sonarqube-ce.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "sonarqube-ce.sonarqube.name" -}}

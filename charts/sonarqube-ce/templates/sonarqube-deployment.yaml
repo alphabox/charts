@@ -110,5 +110,5 @@ spec:
           emptyDir: {}
   selector:
     matchLabels:
-      {{- include "sonarqube-ce.labels" . | nindent 6 }}
+      {{- include "sonarqube-ce.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: sonarqube

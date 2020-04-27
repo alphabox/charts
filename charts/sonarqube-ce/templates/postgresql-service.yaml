@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: postgresql
 spec:
   selector:
-    {{- include "sonarqube-ce.labels" . | nindent 4 }}
+    {{- include "sonarqube-ce.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: postgresql
   ports:
     - port: 5432
