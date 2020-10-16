@@ -3,7 +3,7 @@ fullnameOverride: ""
 
 image:
   repository: sonarqube
-  tag: 8.2-community
+  tag: 8.5-community
   pullPolicy: IfNotPresent
 
 app:
