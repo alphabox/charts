@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/component: sonarqube
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: {{ include "sonarqube-ce.sonarqube.name" . }}
@@ -16,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: configure-sysctl
-          image: bash:5.0.16
+          image: bash:5.0.18
           securityContext:
             privileged: true
             readOnlyRootFilesystem: true
@@ -25,17 +27,17 @@ spec:
             - -c
             - |
               MAX_MAP_COUNT=$(sysctl -n vm.max_map_count)
-              if [[ $MAX_MAP_COUNT -lt 262144 ]]; then
-                echo "Update vm.max_map_count to 262144"
-                sysctl -w vm.max_map_count=262144
+              if [[ $MAX_MAP_COUNT -lt 524288 ]]; then
+                echo "Update vm.max_map_count to 524288"
+                sysctl -w vm.max_map_count=524288
               else
                 echo "vm.max_map_count current value is $MAX_MAP_COUNT"
               fi
 
               FILE_MAX=$(sysctl -n fs.file-max)
-              if [[ $FILE_MAX -lt 65536 ]]; then
-                echo "Update fs.file-max to 65536"
-                sysctl -w fs.file-max=65536
+              if [[ $FILE_MAX -lt 131072 ]]; then
+                echo "Update fs.file-max to 131072"
+                sysctl -w fs.file-max=131072
               else
                 echo "fs.file-max current value is $FILE_MAX"
               fi
@@ -78,7 +80,7 @@ spec:
       restartPolicy: Always
       volumes:
         - name: tmp
-          emptyDir: {}
+          emptyDir: { }
         - name: sonarqube-conf
           configMap:
             name: {{ include "sonarqube-ce.sonarqube.name" . }}-config
@@ -90,24 +92,24 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.data.existingClaim | default (printf "%s-data" (include "sonarqube-ce.sonarqube.name" .)) }}
           {{- else }}
-          emptyDir: {}
-          {{- end }}
+          emptyDir: { }
+        {{- end }}
         - name: sonarqube-logs
           {{- if .Values.persistence.logs.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.logs.existingClaim | default (printf "%s-logs" (include "sonarqube-ce.sonarqube.name" .)) }}
           {{- else }}
-          emptyDir: {}
-          {{- end }}
+          emptyDir: { }
+        {{- end }}
         - name: sonarqube-extensions
           {{- if .Values.persistence.extensions.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.extensions.existingClaim | default (printf "%s-extensions" (include "sonarqube-ce.sonarqube.name" .)) }}
           {{- else }}
-          emptyDir: {}
-          {{- end }}
+          emptyDir: { }
+        {{- end }}
         - name: sonarqube-temp
-          emptyDir: {}
+          emptyDir: { }
   selector:
     matchLabels:
       {{- include "sonarqube-ce.selectorLabels" . | nindent 6 }}
