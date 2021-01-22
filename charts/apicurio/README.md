@@ -3,7 +3,7 @@
 | nameOverride                            | Override the resource name prefix                              | `nil`                                   |
 | fullnameOverride                        | Override the full resource names                               | `nil`                                   |
 | api.image.repository                    | API component image repository                                 | `"apicurio/apicurio-studio-api"`        |
-| api.image.tag                           | API component image tag                                        | `"0.2.46.Final"`                        |
+| api.image.tag                           | API component image tag                                        | `"0.2.47.Final"`                        |
 | api.image.pullPolicy                    | API component image pull policy                                | `"IfNotPresent"`                        |
 | api.app.keyCloakClientId                | The Client ID of the Keycloak client to use for authentication | `"apicurio-api"`                        |
 | api.app.loggingLevel                    | Default logging level                                          | `"INFO"`                                |
@@ -14,7 +14,7 @@
 | api.app.bitbucketApiUrl                 | URL of the Bitbucket API                                       | `"https://api.bitbucket.org/2.0"`       |
 | api.resources                           | API component resource requests & limits                       | `{}`                                    |
 | ui.image.repository                     | UI component image repository                                  | `"apicurio/apicurio-studio-ui"`         |
-| ui.image.tag                            | UI component image tag                                         | `"0.2.46.Final"`                        |
+| ui.image.tag                            | UI component image tag                                         | `"0.2.47.Final"`                        |
 | ui.image.pullPolicy                     | UI component image pull policy                                 | `"IfNotPresent"`                        |
 | ui.app.keyCloakClientId                 | The Client ID of the Keycloak client to use for authentication | `"apicurio-studio"`                     |
 | ui.app.loggingLevel                     | Default logging level                                          | `"INFO"`                                |
@@ -24,7 +24,7 @@
 | ui.app.wsAbsolutePath                   | WS component absolute (optional, see below)                    | `""`                                    |
 | ui.resources                            | UI component resource requests & limits                        | `{}`                                    |
 | ws.image.repository                     | WS component image repository                                  | `"apicurio/apicurio-studio-ws"`         |
-| ws.image.tag                            | WS component image tag                                         | `"0.2.46.Final"`                        |
+| ws.image.tag                            | WS component image tag                                         | `"0.2.47.Final"`                        |
 | ws.image.pullPolicy                     | WS component image pull policy                                 | `"IfNotPresent"`                        |
 | ws.app.loggingLevel                     | Default logging level                                          | `"INFO"`                                |
 | ws.app.minHeap                          | Minimum java heap setting                                      | `"768m"`                                |
