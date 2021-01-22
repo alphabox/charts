@@ -68,54 +68,31 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "apicurio.db.connectionUrl" -}}
-{{- if .Values.mysqlExternal.enabled }}
-    {{- printf "jdbc:mysql://%s:%d/%s" .Values.mysqlExternal.service.name ( int .Values.mysqlExternal.service.port ) .Values.mysqlExternal.properties.database -}}
-{{- else if .Values.postgresqlExternal.enabled -}}
-    {{- printf "jdbc:postgresql://%s:%d/%s" .Values.postgresqlExternal.service.name ( int .Values.postgresqlExternal.service.port ) .Values.postgresqlExternal.properties.database -}}
-{{- else if .Values.postgresql.enabled -}}
-    {{- printf "jdbc:postgresql://%s/%s" ( include "apicurio.postgresql.name" . ) .Values.postgresql.properties.database -}}
-{{- end -}}
-{{- end -}}
+{{- $scheme := printf "%s:%s" "jdbc" .Values.dbConnection.driver -}}
+{{- $host := printf "%s:%d" .Values.dbConnection.host (.Values.dbConnection.port | int) -}}
+{{- $path := printf "/%s" .Values.dbConnection.name -}}
+{{- $properties := .Values.dbConnection.properties | join "&" -}}
 
-{{- define "apicurio.db.driverName" -}}
-{{- if .Values.mysqlExternal.enabled }}
-    {{- printf "mysql" -}}
-{{- else if or .Values.postgresqlExternal.enabled .Values.postgresql.enabled -}}
-    {{- printf "postgresql" -}}
-{{- end -}}
+{{- urlJoin (dict "scheme" $scheme "host" $host "path" $path "query" $properties) -}}
 {{- end -}}
 
 {{- define "apicurio.db.type" -}}
-{{- if .Values.mysqlExternal.enabled }}
-    {{- printf "mysql5" -}}
-{{- else if or .Values.postgresqlExternal.enabled .Values.postgresql.enabled -}}
-    {{- printf "postgresql9" -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "apicurio.db.username" -}}
-{{- if .Values.mysqlExternal.enabled }}
-{{- .Values.mysqlExternal.properties.username | toYaml | trimSuffix "\n" }}
-{{- else if .Values.postgresqlExternal.enabled -}}
-{{- .Values.postgresqlExternal.properties.username | toYaml | trimSuffix "\n" }}
-{{- else if .Values.postgresql.enabled -}}
-valueFrom:
-  secretKeyRef:
-    name: {{ include "apicurio.postgresql.name" . }}
-    key: username
+{{- $types := dict "h2" "h2" "mysql" "mysql5" "postgresql" "postgresql9" -}}
+{{- if not (hasKey $types .Values.dbConnection.driver) -}}
+{{- printf "Not supported driver: %s" .Values.dbConnection.driver | fail -}}
+{{- else -}}
+{{- get $types .Values.dbConnection.driver | quote -}}
 {{- end -}}
 {{- end -}}
 
 {{- define "apicurio.db.password" -}}
-{{- if .Values.mysqlExternal.enabled }}
-{{- .Values.mysqlExternal.properties.password | toYaml | trimSuffix "\n" }}
-{{- else if .Values.postgresqlExternal.enabled -}}
-{{- .Values.postgresqlExternal.properties.password | toYaml | trimSuffix "\n" }}
-{{- else if .Values.postgresql.enabled -}}
+{{- if .Values.dbConnection.passwordFromSecretKeyRef -}}
 valueFrom:
   secretKeyRef:
-    name: {{ include "apicurio.postgresql.name" . }}
-    key: password
+    name: {{ .Values.dbConnection.passwordFromSecretKeyRef.name }}
+    key: {{ .Values.dbConnection.passwordFromSecretKeyRef.key }}
+{{- else -}}
+value: {{ .Values.dbConnection.password | quote }}
 {{- end -}}
 {{- end -}}
 

@@ -4,7 +4,7 @@ fullnameOverride:
 api:
   image:
     repository: apicurio/apicurio-studio-api
-    tag: 0.2.46.Final
+    tag: 0.2.47.Final
     pullPolicy: IfNotPresent
   app:
     keyCloakClientId: apicurio-api
@@ -14,12 +14,13 @@ api:
     githubApiUrl: https://api.github.com
     gitlabApiUrl: https://gitlab.com
     bitbucketApiUrl: https://api.bitbucket.org/2.0
+  env: []
   resources: {}
 
 ui:
   image:
     repository: apicurio/apicurio-studio-ui
-    tag: 0.2.46.Final
+    tag: 0.2.47.Final
     pullPolicy: IfNotPresent
   app:
     keyCloakClientId: apicurio-studio
@@ -28,55 +29,37 @@ ui:
     maxHeap: 2048m
     apiAbsolutePath: ""
     wsAbsolutePath: ""
+  env: []
   resources: {}
 
 ws:
   image:
     repository: apicurio/apicurio-studio-ws
-    tag: 0.2.46.Final
+    tag: 0.2.47.Final
     pullPolicy: IfNotPresent
   app:
     loggingLevel: INFO
     minHeap: 768m
     maxHeap: 2048m
+  env: []
   resources: {}
 
-postgresql:
-  enabled: true
-  image:
-    repository: postgres
-    tag: 12.2-alpine
-    pullPolicy: IfNotPresent
+dbConnection:
+  driver: "mysql"
+  name: apicurio
+  host: localhost
+  port: 3306
+  username: apicurio
+  password: apicurio
+  # Work as environments valueFrom: https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#define-container-environment-variables-using-secret-data
+  # You have to set secrets name and key, for example:
+  # passwordFromSecretKeyRef:
+  #   name: apicurio-db-secret
+  #   key: password
+  # Note: This value has power over password (check _helpers.tpl).
+  passwordFromSecretKeyRef: {}
   properties:
-    username: apicurio
-    password: apicurio
-    database: apicurio
-  persistence:
-    enabled: false
-    size: 1Gi
-    storageClassName: ""
-    existingClaim: ""
-  resources: {}
-
-mysqlExternal:
-  enabled: false
-  service:
-    name: ""
-    port: 3306
-  properties:
-    username: {}
-    password: {}
-    database: ""
-
-postgresqlExternal:
-  enabled: false
-  service:
-    name: ""
-    port: 0
-  properties:
-    database: ""
-    username: {}
-    password: {}
+    - useLegacyDatetimeCode=false
 
 keycloak:
   url: https://studio-auth.apicur.io/auth/
