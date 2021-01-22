@@ -14,6 +14,7 @@ api:
     githubApiUrl: https://api.github.com
     gitlabApiUrl: https://gitlab.com
     bitbucketApiUrl: https://api.bitbucket.org/2.0
+  env: []
   resources: {}
 
 ui:
@@ -28,6 +29,7 @@ ui:
     maxHeap: 2048m
     apiAbsolutePath: ""
     wsAbsolutePath: ""
+  env: []
   resources: {}
 
 ws:
@@ -39,6 +41,7 @@ ws:
     loggingLevel: INFO
     minHeap: 768m
     maxHeap: 2048m
+  env: []
   resources: {}
 
 postgresql:

@@ -21,6 +21,7 @@
 | api.app.githubApiUrl      | URL of the GitHub API                                          | `"https://api.github.com"`         |
 | api.app.gitlabApiUrl      | URL of the GitLab API                                          | `"https://gitlab.com"`             |
 | api.app.bitbucketApiUrl   | URL of the Bitbucket API                                       | `"https://api.bitbucket.org/2.0"`  |
+| api.env                   | API component additional environment variables                 | `[]`                               |
 | api.resources             | API component resource requests & limits                       | `{}`                               |
 
 ## UI Component
@@ -36,19 +37,21 @@
 | ui.app.maxHeap           | Maximum java heap setting                                       | `"2048m"`                        |
 | ui.app.apiAbsolutePath   | API component absolute (optional, see below)                    | `""`                             |
 | ui.app.wsAbsolutePath    | WS component absolute (optional, see below)                     | `""`                             |
+| ui.env                   | UI component additional environment variables                   | `[]`                             |
 | ui.resources             | UI component resource requests & limits                         | `{}`                             |
 
 ## WS Component
 
-| Parameter            | Description                              | Default                          |
-|--------------------  |------------------------------------------|----------------------------------|
-| ws.image.repository  | WS component image repository            | `"apicurio/apicurio-studio-ws"`  |
-| ws.image.tag         | WS component image tag                   | `"0.2.47.Final"`                 |
-| ws.image.pullPolicy  | WS component image pull policy           | `"IfNotPresent"`                 |
-| ws.app.loggingLevel  | Default logging level                    | `"INFO"`                         |
-| ws.app.minHeap       | Minimum java heap setting                | `"768m"`                         |
-| ws.app.maxHeap       | Maximum java heap setting                | `"2048m"`                        |
-| ws.resources         | WS component resource requests & limits  | `{}`                             |
+| Parameter            | Description                                    | Default                          |
+|--------------------  |------------------------------------------------|----------------------------------|
+| ws.image.repository  | WS component image repository                  | `"apicurio/apicurio-studio-ws"`  |
+| ws.image.tag         | WS component image tag                         | `"0.2.47.Final"`                 |
+| ws.image.pullPolicy  | WS component image pull policy                 | `"IfNotPresent"`                 |
+| ws.app.loggingLevel  | Default logging level                          | `"INFO"`                         |
+| ws.app.minHeap       | Minimum java heap setting                      | `"768m"`                         |
+| ws.app.maxHeap       | Maximum java heap setting                      | `"2048m"`                        |
+| ws.resources         | WS component additional environment variables  | `[]`                             |
+| ws.resources         | WS component resource requests & limits        | `{}`                             |
 
 ## Postgres Deployment
 

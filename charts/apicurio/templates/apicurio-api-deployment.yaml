@@ -20,6 +20,9 @@ spec:
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           env:
+            {{- if .Values.api.env }}
+            {{- toYaml .Values.api.env | trim | nindent 12 }}
+            {{- end }}
             - name: APICURIO_DB_CONNECTION_URL
               value: {{ include "apicurio.db.connectionUrl" . | quote }}
             - name: APICURIO_DB_DRIVER_NAME
