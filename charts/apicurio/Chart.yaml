@@ -1,8 +1,9 @@
-apiVersion: v1
+apiVersion: v2
 name: apicurio
 home: https://www.apicur.io/
-version: 0.1.2
+version: 1.0.0
 appVersion: 0.2.47.Final
+type: application
 description: Design beautiful, functional APIs with zero coding, using OpenAPI
 sources:
   - https://github.com/Apicurio/apicurio-studio
