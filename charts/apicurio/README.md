@@ -53,44 +53,18 @@
 | ws.resources         | WS component additional environment variables  | `[]`                             |
 | ws.resources         | WS component resource requests & limits        | `{}`                             |
 
-## Postgres Deployment
+## Database Access Properties
 
-| Parameter                                | Description                             | Default           |
-|------------------------------------------|-----------------------------------------|-------------------|
-| postgresql.enabled                       | Enable PostgreSQL deployment            | `true`            |
-| postgresql.image.repository              | PostgreSQL image repository             | `"postgres"`      |
-| postgresql.image.tag                     | PostgreSQL image tag                    | `"12.2-alpine"`   |
-| postgresql.image.pullPolicy              | PostgreSQL image pull policy            | `"IfNotPresent"`  |
-| postgresql.properties.username           | PostgreSQL user with superuser power    | `"apicurio"`      |
-| postgresql.properties.password           | PostgreSQL user password                | `"apicurio"`      |
-| postgresql.properties.database           | PostgreSQL database name                | `"apicurio"`      |
-| postgresql.persistence.enabled           | Enable persistence using PVC            | `false`           |
-| postgresql.persistence.size              | `PersistenceVolumeClaim` size           | `"1Gi"`           |
-| postgresql.persistence.storageClassName  | `PersistenceVolumeClaim` storage class  | `""`              |
-| postgresql.persistence.existingClaim     | Existing `PersistentVolumeClaim` name   | `""`              |
-| postgresql.resources                     | PostgreSQL resource requests & limits   | `{}`              |
-
-## External MySQL Access
-
-| Parameter                          | Description                                    | Default  |
-|------------------------------------|------------------------------------------------|----------|
-| mysqlExternal.enabled              | Use an external MySQL instance                 | `false`  |
-| mysqlExternal.service.name         | External MySQL instance `Service` name         | `""`     |
-| mysqlExternal.service.port         | External MySQL instance `Service` port number  | `3306`   |
-| mysqlExternal.properties.username  | External MySQL instance username               | `{}`     |
-| mysqlExternal.properties.password  | External MySQL instance password               | `{}`     |
-| mysqlExternal.properties.database  | External MySQL instance database               | `""`     |
-
-## External PostgreSQL Access
-
-| Parameter                               | Description                                         | Default  |
-|-----------------------------------------|-----------------------------------------------------|----------|
-| postgresqlExternal.enabled              | Use an external PostgreSQL instance                 | `false`  |
-| postgresqlExternal.service.name         | External PostgreSQL instance `Service` name         | `""`     |
-| postgresqlExternal.service.port         | External PostgreSQL instance `Service` port number  | `5432`   |
-| postgresqlExternal.properties.username  | External PostgreSQL instance username               | `{}`     |
-| postgresqlExternal.properties.password  | External PostgreSQL instance password               | `{}`     |
-| postgresqlExternal.properties.database  | External PostgreSQL instance database               | `""`     |
+| Parameter                              | Description                                                             | Default                          |
+|----------------------------------------|-------------------------------------------------------------------------|----------------------------------|
+| dbConnection.driver                    | Database driver name. <br> Possible values: h2, mysql, and postgresql.  | `mysql`                          |
+| dbConnection.name                      | Database name                                                           | `"apicurio"`                     |
+| dbConnection.host                      | Database host                                                           | `localhost`                      |
+| dbConnection.port                      | Database port                                                           | `3306`                           |
+| dbConnection.username                  | Database username                                                       | `"apicurio"`                     |
+| dbConnection.password                  | Database password                                                       | `"apicurio"`                     |
+| dbConnection.passwordFromSecretKeyRef  | Database password from Secret (check values.yaml)                       | `{}`                             |
+| dbConnection.properties                | Database JDBC properties                                                | `[useLegacyDatetimeCode=false]`  |
 
 ## Keycloak Connection Parameters
 
