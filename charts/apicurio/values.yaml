@@ -4,7 +4,7 @@ fullnameOverride:
 api:
   image:
     repository: apicurio/apicurio-studio-api
-    tag: 0.2.47.Final
+    tag: 0.2.48.Final
     pullPolicy: IfNotPresent
   app:
     keyCloakClientId: apicurio-api
@@ -20,7 +20,7 @@ api:
 ui:
   image:
     repository: apicurio/apicurio-studio-ui
-    tag: 0.2.47.Final
+    tag: 0.2.48.Final
     pullPolicy: IfNotPresent
   app:
     keyCloakClientId: apicurio-studio
@@ -35,7 +35,7 @@ ui:
 ws:
   image:
     repository: apicurio/apicurio-studio-ws
-    tag: 0.2.47.Final
+    tag: 0.2.48.Final
     pullPolicy: IfNotPresent
   app:
     loggingLevel: INFO
